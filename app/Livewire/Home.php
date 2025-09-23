@@ -7,28 +7,30 @@ use Livewire\Component;
 
 class Home extends Component
 {
-        public $search = '';
+    public $search = '';
     public $selectedCategory = '';
-    public $categories = ['guitar', 'drum', 'keyboard', 'amplifier', 'accessories', 'other'];
-    public $products = [];
+    public $categories = [];
 
     public function mount()
     {
-        $this->products = Product::all();
+        $this->categories = Product::distinct()->pluck('category')->filter()->values()->toArray();
+    }
 
-                $productsQuery = Product::query();
+    public function getProductsProperty()
+    {
+        $query = Product::query();
 
         if ($this->search) {
-            $productsQuery->where('name', 'like', "%{$this->search}%")
-                ->orWhere('description', 'like', "%{$this->search}%");
+            $query->where('name', 'like', '%' . $this->search . '%')
+                  ->orWhere('description', 'like', '%' . $this->search . '%')
+                  ->orWhere('brand', 'like', '%' . $this->search . '%');
         }
 
         if ($this->selectedCategory) {
-            $productsQuery->where('category', $this->selectedCategory);
+            $query->where('category', $this->selectedCategory);
         }
 
-        $this->products = $productsQuery->get();
-
+        return $query->orderBy('created_at', 'desc')->get();
     }
 
     public function render()

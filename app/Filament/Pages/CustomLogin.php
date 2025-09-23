@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use Filament\Pages\Auth\Login as BaseLogin;
+use Illuminate\Support\Facades\Auth;
 
 class CustomLogin extends BaseLogin
 {
@@ -39,7 +40,16 @@ class CustomLogin extends BaseLogin
     protected function getAuthenticateFormAction(): \Filament\Actions\Action
     {
         return parent::getAuthenticateFormAction()
-            ->label('Sign In');
+            ->label('Sign In')
+            ->action(function () {
+                $this->authenticate();
+                $user = Auth::user();
+                if ($user->role === 'admin') {
+                    return redirect('/admin');
+                } else {
+                    return redirect('/');
+                }
+            });
     }
 
     protected function getEmailFormComponent(): \Filament\Forms\Components\Component

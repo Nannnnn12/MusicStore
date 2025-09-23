@@ -59,20 +59,24 @@ class CustomRegister extends BaseRegister
 
     protected function getPasswordFormComponent(): TextInput
     {
-        return parent::getPasswordFormComponent()
+        return TextInput::make('password')
             ->label('Password')
             ->required()
             ->minLength(8)
-            ->confirmed()
+            ->password()
+            ->revealable()
             ->helperText('Password must be at least 8 characters long');
     }
 
     protected function getPasswordConfirmationFormComponent(): TextInput
     {
-        return parent::getPasswordConfirmationFormComponent()
+        return TextInput::make('password_confirmation')
             ->label('Confirm Password')
             ->required()
-            ->minLength(8);
+            ->minLength(8)
+            ->password()
+            ->dehydrateStateUsing(fn ($state) => $state)
+            ->same('password');
     }
 
     public function register(): \Filament\Http\Responses\Auth\Contracts\RegistrationResponse|null
@@ -84,6 +88,7 @@ class CustomRegister extends BaseRegister
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
+                'role' => 'user', // Default role for new registrations
             ]);
 
             Notification::make()
@@ -94,6 +99,7 @@ class CustomRegister extends BaseRegister
 
             Auth::login($user);
 
+            // The middleware will handle redirection based on role
             return null;
         } catch (\Exception $e) {
             Notification::make()
