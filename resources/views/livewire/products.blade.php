@@ -94,25 +94,6 @@
                                     </select>
                                 </div>
 
-                                <!-- Price Range -->
-                                <div class="mb-6">
-                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Price Range</label>
-                                    <div class="flex gap-3">
-                                        <input
-                                            type="number"
-                                            wire:model.live="minPrice"
-                                            placeholder="Min price"
-                                            class="flex-1 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300"
-                                        >
-                                        <input
-                                            type="number"
-                                            wire:model.live="maxPrice"
-                                            placeholder="Max price"
-                                            class="flex-1 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300"
-                                        >
-                                    </div>
-                                </div>
-
                                 <!-- Sort Options -->
                                 <div class="mb-6">
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Sort By</label>
@@ -157,7 +138,7 @@
                             <div class="relative">
                                 <input
                                     type="text"
-                                    wire:model.live="search"
+                                    wire:model="search"
                                     placeholder="Search products..."
                                     class="w-full px-4 py-3 pl-12 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300"
                                 >
@@ -194,13 +175,13 @@
                                             {{ $product->name }}
                                         </h3>
                                         <p class="text-gray-600 dark:text-gray-300 text-base mb-6 line-clamp-3 leading-relaxed">
-                                            {{ $product->description ?? 'High-quality musical instrument perfect for musicians of all levels. Crafted with precision and attention to detail.' }}
+                                                {{ $product->description ?? 'High-quality musical instrument perfect for musicians of all levels. Crafted with precision and attention to detail.' }}
                                         </p>
 
                                         <div class="flex justify-between items-center mb-6">
                                             <div class="text-left">
                                                 <span class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                                                    ${{ number_format($product->price, 2) }}
+                                                    Rp. {{ number_format($product->price, 2) }}
                                                 </span>
                                                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
                                                     @if($product->stock_quantity == 0)
@@ -228,9 +209,9 @@
                                             <button class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                                                 Add to Cart
                                             </button>
-                                            <button class="flex-1 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 font-semibold">
+                                            <a href="{{ route('product.detail', $product->id) }}" class="flex-1 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 font-semibold text-center block">
                                                 View Details
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

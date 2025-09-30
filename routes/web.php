@@ -3,12 +3,16 @@
 use App\Livewire\Home;
 use App\Livewire\HomePage;
 use App\Livewire\Products;
+use App\Livewire\ProductDetail;
+use App\Livewire\Cart;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::middleware(['role.redirect'])->group(function () {
     Route::get('/', Home::class)->name('home');
     Route::get('/products', Products::class)->name('products');
+    Route::get('/product/{productId}', ProductDetail::class)->name('product.detail');
+    Route::get('/cart', Cart::class)->name('cart');
 
     // Profile route (you can create a Livewire component or controller for this)
     Route::get('/profile', function () {

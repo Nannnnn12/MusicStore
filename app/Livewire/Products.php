@@ -22,6 +22,13 @@ class Products extends Component
     public $categories = ['guitar', 'drum', 'keyboard', 'amplifier', 'accessories', 'other'];
     public $brands = [];
 
+    // Remove button properties as they are not used in the blade now
+    // public $selectedCategoryButton = 'all';
+    // public $selectedBrandButton = 'all';
+    // public $selectedStockStatusButton = 'all';
+    // public $selectedSortByButton = 'name';
+    // public $selectedSortDirectionButton = 'asc';
+
     public function mount()
     {
         $this->loadBrands();
@@ -43,10 +50,10 @@ class Products extends Component
                       ->orWhere('brand', 'like', "%{$this->search}%");
                 });
             })
-            ->when($this->selectedCategory, function ($query) {
+            ->when($this->selectedCategory !== '', function ($query) {
                 $query->where('category', $this->selectedCategory);
             })
-            ->when($this->selectedBrand, function ($query) {
+            ->when($this->selectedBrand !== '', function ($query) {
                 $query->where('brand', $this->selectedBrand);
             })
             ->when($this->minPrice, function ($query) {
@@ -55,7 +62,7 @@ class Products extends Component
             ->when($this->maxPrice, function ($query) {
                 $query->where('price', '<=', $this->maxPrice);
             })
-            ->when($this->stockStatus, function ($query) {
+            ->when($this->stockStatus !== '', function ($query) {
                 if ($this->stockStatus === 'in_stock') {
                     $query->where('stock_quantity', '>', 0);
                 } elseif ($this->stockStatus === 'out_of_stock') {
@@ -108,6 +115,7 @@ class Products extends Component
     {
         // No need to do anything, render will handle it
     }
+
 
     public function clearFilters()
     {
