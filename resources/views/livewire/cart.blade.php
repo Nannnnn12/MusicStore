@@ -90,7 +90,7 @@
                                                     </svg>
                                                 </button>
                                                 <span
-                                                    class="w-12 text-center text-lg font-semibold">{{ $item['quantity'] }}</span>
+                                                    class="w-12 text-center text-lg font-semibold text-white">{{ $item['quantity'] }}</span>
                                                 <button
                                                     wire:click="updateQuantity({{ $item['id'] }}, {{ $item['quantity'] + 1 }})"
                                                     class="p-1 rounded-full bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
@@ -164,10 +164,10 @@
                             </div>
 
                             <div class="p-6 pt-0">
-                                <button
-                                    class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <a href="{{ route('checkout') }}"
+                                    class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-center block">
                                     Proceed to Checkout
-                                </button>
+                                </a>
 
                                 <button
                                     class="w-full mt-3 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 font-semibold">

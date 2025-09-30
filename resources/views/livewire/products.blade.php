@@ -95,13 +95,13 @@
                                         By</label>
                                     <div class="flex gap-3">
                                         <select wire:model.live="sortBy"
-                                            class="flex-1 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300">
+                                            class="flex-1 px-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300">
                                             <option value="name">Name</option>
                                             <option value="price">Price</option>
                                             <option value="created_at">Date Added</option>
                                         </select>
                                         <select wire:model.live="sortDirection"
-                                            class="flex-1 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300">
+                                            class="flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300">
                                             <option value="asc">↑ Ascending</option>
                                             <option value="desc">↓ Descending</option>
                                         </select>
