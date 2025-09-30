@@ -69,39 +69,40 @@ class ProductDetail extends Component
         }
     }
 
-    public function addToCart()
-    {
-        if (!Auth::check()) {
-            session()->flash('error', 'Please login to add items to cart.');
-            return;
-        }
-
-        try {
-            $cartItem = CartModel::where('user_id', Auth::id())
-                ->where('product_id', $this->product->id)
-                ->first();
-
-            if ($cartItem) {
-                $cartItem->increment('quantity', $this->quantity);
-            } else {
-                CartModel::create([
-                    'user_id' => Auth::id(),
-                    'product_id' => $this->product->id,
-                    'quantity' => $this->quantity,
-                    'price' => $this->product->price,
-                ]);
-            }
-
-            // Emit event to update cart counter
-            $this->dispatch('cartUpdated');
-            $this->dispatch('refreshCart');
-
-            session()->flash('message', 'Product added to cart successfully!');
-            $this->quantity = 1; // Reset quantity after adding to cart
-        } catch (\Exception $e) {
-            session()->flash('error', 'Failed to add product to cart. Please try again.');
-        }
+   public function addToCart()
+{
+    if (!Auth::check()) {
+        session()->flash('error', 'Please login to add items to cart.');
+        return;
     }
+
+    try {
+        $cartItem = CartModel::where('user_id', Auth::id())
+            ->where('product_id', $this->product->id)
+            ->first();
+
+        if ($cartItem) {
+            $cartItem->increment('quantity', $this->quantity);
+        } else {
+            CartModel::create([
+                'user_id' => Auth::id(),
+                'product_id' => $this->product->id,
+                'quantity' => $this->quantity,
+                'price' => $this->product->price,
+            ]);
+        }
+
+        // sementara jangan dispatch dulu
+        // $this->dispatch('cartUpdated');
+        // $this->dispatch('refreshCart');
+
+        session()->flash('message', 'Product added to cart successfully!');
+        $this->quantity = 1;
+    } catch (\Exception $e) {
+        session()->flash('error', 'Failed to add product to cart. Please try again.');
+    }
+}
+
 
     public function addToWishlist()
     {

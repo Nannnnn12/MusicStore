@@ -1,5 +1,5 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,17 +12,15 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-
     @livewireStyles
 </head>
-
 <body>
     <x-user.header />
 
     {{ $slot }}
 
-    @livewireScripts
     <x-user.footer />
-</body>
 
+    @livewireScripts
+</body>
 </html>

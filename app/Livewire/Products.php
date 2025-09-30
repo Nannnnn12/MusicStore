@@ -46,8 +46,8 @@ class Products extends Component
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('name', 'like', "%{$this->search}%")
-                      ->orWhere('description', 'like', "%{$this->search}%")
-                      ->orWhere('brand', 'like', "%{$this->search}%");
+                        ->orWhere('description', 'like', "%{$this->search}%")
+                        ->orWhere('brand', 'like', "%{$this->search}%");
                 });
             })
             ->when($this->selectedCategory !== '', function ($query) {
@@ -77,6 +77,11 @@ class Products extends Component
     }
 
     public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function searchProducts()
     {
         $this->resetPage();
     }
