@@ -28,10 +28,16 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login(\App\Filament\Pages\CustomLogin::class)
             ->registration(\App\Filament\Pages\CustomRegister::class)
-            ->brandName('Music Store Admin')
+            ->brandName('Music Store')
             ->favicon(asset('favicon.ico'))
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#4F46E5', // Indigo-600
+                'secondary' => '#7C3AED', // Purple-600
+                'gray' => Color::Gray,
+                'success' => Color::Green,
+                'danger' => Color::Red,
+                'warning' => Color::Amber,
+                'info' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

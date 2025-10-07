@@ -214,9 +214,9 @@
                                 class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-8 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                                 Add to Cart
                             </button>
-                            <button wire:click="addToWishlist"
+                            <button wire:click="checkout"
                                 class="flex-1 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-4 px-8 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 font-semibold">
-                                Add to Wishlist
+                                Checkout
                             </button>
                         </div>
                     </div>

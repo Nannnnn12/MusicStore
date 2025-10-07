@@ -47,12 +47,23 @@
                                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Shopping Cart</h1>
                                 <p class="text-gray-600 dark:text-gray-300 mt-1">{{ count($cartItems) }} item(s) in your
                                     cart</p>
+                                <div class="mt-4">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" wire:model.live="selectAll" wire:click="toggleSelectAll" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                        <span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Select All Items</span>
+                                    </label>
+                                </div>
                             </div>
 
                             <div class="divide-y divide-gray-200 dark:divide-gray-700">
                                 @foreach ($cartItems as $item)
                                     <div class="p-6">
                                         <div class="flex items-center space-x-4">
+                                            <!-- Checkbox -->
+                                            <div class="flex items-center">
+                                                <input type="checkbox" wire:model.live="selectedItems" value="{{ $item['id'] }}" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                            </div>
+
                                             <!-- Product Image -->
                                             <div
                                                 class="flex-shrink-0 w-24 h-24 bg-gradient-to-br from-indigo-100 via-purple-50 to-indigo-100 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-lg flex items-center justify-center">
@@ -138,7 +149,7 @@
                             <div class="p-6 space-y-4">
                                 <div class="flex justify-between">
                                     <span class="text-gray-600 dark:text-gray-300">Subtotal
-                                        ({{ array_sum(array_column($cartItems, 'quantity')) }} items)</span>
+                                        ({{ count($selectedItems) }} items)</span>
                                     <span
                                         class="font-semibold text-gray-900 dark:text-white">Rp. {{ number_format($total, 2) }}</span>
                                 </div>
@@ -164,10 +175,12 @@
                             </div>
 
                             <div class="p-6 pt-0">
-                                <a href="{{ route('checkout') }}"
-                                    class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-center block">
-                                    Proceed to Checkout
-                                </a>
+                                <button wire:click="proceedToCheckout"
+                                    class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                    wire:loading.attr="disabled" wire:loading.class="opacity-50">
+                                    <span wire:loading.remove>Proceed to Checkout</span>
+                                    <span wire:loading>Processing...</span>
+                                </button>
 
                                 <button
                                     class="w-full mt-3 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200 font-semibold">

@@ -6,6 +6,7 @@ use App\Livewire\Products;
 use App\Livewire\ProductDetail;
 use App\Livewire\Cart;
 use App\Livewire\Checkout;
+use App\Livewire\OrderTracking;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,7 @@ Route::middleware(['role.redirect'])->group(function () {
     Route::get('/product/{productId}', ProductDetail::class)->name('product.detail');
     Route::get('/cart', Cart::class)->name('cart');
     Route::get('/checkout', Checkout::class)->name('checkout');
+    Route::get('/orders', OrderTracking::class)->name('orders');
 
     // Profile route (you can create a Livewire component or controller for this)
     Route::get('/profile', function () {
@@ -26,6 +28,8 @@ Route::middleware(['role.redirect'])->group(function () {
         Auth::logout();
         return redirect('/');
     })->name('logout');
+
+
 });
 
 // Authentication routes (assuming you have these pages)

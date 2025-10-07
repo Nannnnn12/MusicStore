@@ -11,25 +11,20 @@ class RedirectBasedOnRole
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if ($user->role === 'admin') {
-                // If admin is not on admin routes, redirect to admin
-                if (!$request->is('admin') && !$request->is('admin/*')) {
-                    return redirect('/admin');
-                }
-            } elseif ($user->role === 'user') {
-                // If user tries to access admin routes, redirect to home
-                if ($request->is('admin') || $request->is('admin/*')) {
-                    return redirect('/');
-                }
+
+            // Jika user biasa mencoba buka halaman admin → tendang ke /
+            if (in_array($user->role, ['user']) && ($request->is('admin') || $request->is('admin/*'))) {
+                return redirect('/');
             }
+
+            // Jika admin, biarkan akses /admin berjalan normal
         }
+
         return $next($request);
     }
 }

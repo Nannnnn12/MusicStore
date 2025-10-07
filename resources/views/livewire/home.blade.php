@@ -27,21 +27,7 @@
                 </p>
 
                 <!-- Search Bar -->
-                <div class="max-w-2xl mx-auto mb-16">
-                    <div class="relative group">
-                        <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
-                            <svg class="h-6 w-6 text-gray-400 group-focus-within:text-indigo-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </div>
-                        <input
-                            type="text"
-                            wire:model.live="search"
-                            placeholder="Search for instruments, brands, or categories..."
-                            class="w-full pl-14 pr-6 py-5 text-lg text-gray-900 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none dark:bg-gray-800/80 dark:text-white dark:border-gray-600 dark:focus:ring-indigo-400/20 dark:focus:border-indigo-400 transition-all duration-300 shadow-lg hover:shadow-xl"
-                        >
-                    </div>
-                </div>
+               
 
                 <!-- Category Filter -->
                 <div class="flex flex-wrap justify-center gap-3 mb-16">
@@ -207,7 +193,7 @@
     </div>
 
     <!-- Footer -->
-    
+
 </div>
 
 <style>

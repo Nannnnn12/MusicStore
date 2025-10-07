@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Pages\Actions\Action;
 use Filament\Pages\Dashboard as BaseDashboard;
 
 class CustomDashboard extends BaseDashboard
@@ -23,7 +24,12 @@ class CustomDashboard extends BaseDashboard
     protected function getHeaderActions(): array
     {
         return [
-            // Add any custom header actions here
+            Action::make('homepage')
+                ->label('Go to Homepage')
+                ->icon('heroicon-o-home')
+                ->url(url('/'))
+                ->color('info'),
         ];
     }
+
 }

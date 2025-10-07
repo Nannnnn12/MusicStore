@@ -104,15 +104,38 @@ class ProductDetail extends Component
 }
 
 
-    public function addToWishlist()
+    public function checkout()
     {
         if (!Auth::check()) {
-            session()->flash('error', 'Please login to add items to wishlist.');
+            session()->flash('error', 'Please login to checkout.');
             return;
         }
 
-        // Add to wishlist logic here
-        session()->flash('message', 'Product added to wishlist!');
+        try {
+            $cartItem = CartModel::where('user_id', Auth::id())
+                ->where('product_id', $this->product->id)
+                ->first();
+
+            if ($cartItem) {
+                $cartItem->increment('quantity', $this->quantity);
+            } else {
+                CartModel::create([
+                    'user_id' => Auth::id(),
+                    'product_id' => $this->product->id,
+                    'quantity' => $this->quantity,
+                    'price' => $this->product->price,
+                ]);
+            }
+
+            // sementara jangan dispatch dulu
+            // $this->dispatch('cartUpdated');
+            // $this->dispatch('refreshCart');
+
+            $this->quantity = 1;
+            return $this->redirect(route('checkout'));
+        } catch (\Exception $e) {
+            session()->flash('error', 'Failed to proceed to checkout. Please try again.');
+        }
     }
 
     public function render()

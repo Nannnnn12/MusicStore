@@ -14,8 +14,6 @@ class CustomRegister extends BaseRegister
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament-panels::pages.auth.register';
-
     public function getTitle(): string
     {
         return 'Create Account - Music Store Admin';
@@ -54,7 +52,7 @@ class CustomRegister extends BaseRegister
             ->required()
             ->email()
             ->maxLength(255)
-            ->unique(User::class, 'email', ignoreRecord: true);
+            ->unique(User::class, 'email');
     }
 
     protected function getPasswordFormComponent(): TextInput
@@ -75,13 +73,30 @@ class CustomRegister extends BaseRegister
             ->required()
             ->minLength(8)
             ->password()
-            ->dehydrateStateUsing(fn ($state) => $state)
+            ->revealable()
             ->same('password');
+    }
+
+    protected function getTermsFormComponent(): \Filament\Forms\Components\Checkbox
+    {
+        return \Filament\Forms\Components\Checkbox::make('terms')
+            ->label('I agree to the Terms and Conditions')
+            ->required()
+            ->accepted();
     }
 
     public function register(): \Filament\Http\Responses\Auth\Contracts\RegistrationResponse|null
     {
         $data = $this->form->getState();
+
+        if (!isset($data['terms']) || !$data['terms']) {
+            Notification::make()
+                ->title('Terms Required')
+                ->body('You must agree to the Terms and Conditions to register.')
+                ->danger()
+                ->send();
+            return null;
+        }
 
         try {
             $user = User::create([

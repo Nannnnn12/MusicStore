@@ -41,6 +41,7 @@
             <!-- User Actions -->
             <div class="flex items-center space-x-4">
                 @auth
+                @if(auth()->user()->role === 'user')
                     <!-- Cart Button -->
                     <a href="/cart" class="relative text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-all duration-200">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,6 +51,7 @@
                             {{ \App\Models\Cart::where('user_id', auth()->id())->sum('quantity') }}
                         </span>
                     </a>
+                @endif
 
                     <!-- User Dropdown -->
                     <div class="relative" x-data="{ open: false }">
@@ -87,6 +89,14 @@
                                     </svg>
                                     Profile
                                 </a>
+                                @if(auth()->user()->role === 'user')
+                                <a href="{{ route('orders') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 6h18M3 14h18M3 18h18"></path>
+                                    </svg>
+                                    My Orders
+                                </a>
+                                @endif
 
                                 <form method="POST" action="/logout" class="block">
                                     @csrf

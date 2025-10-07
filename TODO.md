@@ -1,14 +1,11 @@
-# Checkout Implementation Tasks
-
-## Completed
-- [x] Create checkout.blade.php view file
-- [x] Create app/Livewire/Checkout.php component
-- [x] Add checkout route to routes/web.php
-- [x] Update cart.blade.php "Proceed to Checkout" button to link to checkout
-- [x] Create Order and OrderItem models
-- [x] Create database migrations for orders and order_items
-- [x] Run migrations to create database tables
-- [x] Add success modal popup after checkout completion
-
-## Pending
-- [ ] Test the checkout flow with success modal
+- [x] Modify PaymentController to set cURL options with longer timeouts (60s total, 10s connect)
+- [x] Remove redundant Midtrans config setting in controller since it's handled in MidtransServiceProvider
+- [x] Add error logging for better debugging
+- [x] Fix checkout.blade.php syntax error and separate JS from modal
+- [x] Increase Http timeout in Checkout component to 120 seconds to prevent timeout during Midtrans request
+- [x] Remove PaymentController route from web.php
+- [x] Update Checkout.php to directly create Midtrans transaction in placeOrder method
+- [x] Import Midtrans\Snap in Checkout component
+- [x] Set curl options for timeouts in Checkout component
+- [x] Add error logging in Checkout component
+- [x] Test the updated Midtrans payment flow

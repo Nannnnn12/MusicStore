@@ -9,8 +9,6 @@ class CustomLogin extends BaseLogin
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament-panels::pages.auth.login';
-
     public function getTitle(): string
     {
         return 'Sign In to Music Store Admin';
@@ -37,19 +35,14 @@ class CustomLogin extends BaseLogin
         ];
     }
 
-    protected function getAuthenticateFormAction(): \Filament\Actions\Action
+    protected function getRedirectUrl(): string
     {
-        return parent::getAuthenticateFormAction()
-            ->label('Sign In')
-            ->action(function () {
-                $this->authenticate();
-                $user = Auth::user();
-                if ($user->role === 'admin') {
-                    return redirect('/admin');
-                } else {
-                    return redirect('/');
-                }
-            });
+        $user = Auth::user();
+        if ($user->role === 'admin') {
+            return '/admin';
+        } else {
+            return '/';
+        }
     }
 
     protected function getEmailFormComponent(): \Filament\Forms\Components\Component

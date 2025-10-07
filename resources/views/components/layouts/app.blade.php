@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +15,7 @@
 
     @livewireStyles
 </head>
+
 <body>
     <x-user.header />
 
@@ -22,5 +24,8 @@
     <x-user.footer />
 
     @livewireScripts
+
+    @stack('scripts')
 </body>
+
 </html>

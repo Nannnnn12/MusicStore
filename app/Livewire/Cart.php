@@ -11,6 +11,8 @@ class Cart extends Component
 {
     public $cartItems = [];
     public $total = 0;
+    public $selectedItems = [];
+    public $selectAll = false;
 
     public function mount()
     {
@@ -28,12 +30,23 @@ class Cart extends Component
             ->get()
             ->toArray(); // Convert to array to avoid type issues
 
+        // Default to none selected if none selected
+        if (empty($this->selectedItems)) {
+            $this->selectedItems = [];
+            $this->selectAll = false;
+        } else {
+            // Remove selected items that are no longer in cart
+            $currentIds = collect($this->cartItems)->pluck('id')->toArray();
+            $this->selectedItems = array_intersect($this->selectedItems, $currentIds);
+            $this->selectAll = count($this->selectedItems) === count($this->cartItems);
+        }
+
         $this->calculateTotal();
     }
 
     public function calculateTotal()
     {
-        $this->total = collect($this->cartItems)->sum(function ($item) {
+        $this->total = collect($this->cartItems)->whereIn('id', $this->selectedItems)->sum(function ($item) {
             return $item['quantity'] * $item['product']['price'];
         });
     }
@@ -60,6 +73,33 @@ class Cart extends Component
             $this->loadCart();
             session()->flash('message', 'Item removed from cart successfully!');
         }
+    }
+
+    public function toggleSelectAll()
+    {
+        if ($this->selectAll) {
+            $this->selectedItems = collect($this->cartItems)->pluck('id')->toArray();
+        } else {
+            $this->selectedItems = [];
+        }
+        $this->calculateTotal();
+    }
+
+    public function updatedSelectedItems()
+    {
+        $this->selectAll = count($this->selectedItems) === count($this->cartItems);
+        $this->calculateTotal();
+    }
+
+    public function proceedToCheckout()
+    {
+        if (empty($this->selectedItems)) {
+            session()->flash('error', 'Please select at least one item to checkout.');
+            return;
+        }
+
+        session(['selected_cart_items' => $this->selectedItems]);
+        return redirect()->route('checkout');
     }
 
     public function clearCart()
